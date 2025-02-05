@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Country Info Portal";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- Banner with group info -->
+<div class="banner">
+    <h2>Group 2</h2>
+    <p>Members: Tanvir, Shaikh, ketul, and others</p>
+</div>
+
+<!-- Table to display country info -->
+<table id="countryTable" border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Capital</th>
+            <th>Region</th>
+            <th>Population</th>
+            <th>Area</th>
+            <th>Currency</th>
+            <th>Language</th>
+            <th>TimeZone</th>
+            <th>Continent</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Data will be inserted here -->
+    </tbody>
+</table>
+
+<!-- Add decorative world map -->
+<img src="world-map.jpg" alt="World Map" style="width: 100%; height: auto;" />
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- AJAX Call to fetch countries -->
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/Country',  // API endpoint to fetch countries
+            type: 'GET',
+            success: function (data) {
+                var tableBody = $("#countryTable tbody");
+                data.forEach(function (country) {
+                    tableBody.append(`
+                        <tr>
+                            <td>${country.name}</td>
+                            <td>${country.capital}</td>
+                            <td>${country.region}</td>
+                            <td>${country.population}</td>
+                            <td>${country.area}</td>
+                            <td>${country.currency}</td>
+                            <td>${country.language}</td>
+                            <td>${country.timeZone}</td>
+                            <td>${country.continent}</td>
+                        </tr>
+                    `);
+                });
+            },
+            error: function () {
+                alert("Error fetching country data.");
+            }
+        });
+    });
+</script>
